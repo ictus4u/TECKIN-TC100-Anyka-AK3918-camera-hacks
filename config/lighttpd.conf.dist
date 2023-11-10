@@ -30,7 +30,6 @@ $SERVER["socket"] == ":443" {
   ssl.pemfile = "/mnt/config/lighttpd.pem"
 }
 
-
 # Support letsencrypt SSL cert paths
 # (we don't want to upgrade to SSL nor auth' this path)
 $HTTP["url"] !~ "^/.well-known/(.*)" {

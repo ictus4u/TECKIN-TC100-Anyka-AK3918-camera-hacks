@@ -15,7 +15,9 @@ function scheduleRefreshLiveImage(interval) {
 
 function refreshSysUsage() {
     var ts = new Date().getTime();
-    $.get("cgi-bin/state.cgi", {cmd: "sysusage", uid: ts}, function(sysusage){document.getElementById("sysusage").innerHTML = sysusage; scheduleRefreshSysUsage(5000);});
+    $.get("cgi-bin/state.cgi", { cmd: "sysusage", uid: ts }, function (sysusage) {
+        document.getElementById("sysusage").innerHTML = sysusage; scheduleRefreshSysUsage(5000);
+    });
 }
 
 function scheduleRefreshSysUsage(interval) {
@@ -27,7 +29,7 @@ function scheduleRefreshSysUsage(interval) {
 
 function refreshAutoNightLumAwb() {
     var ts = new Date().getTime();
-    $.get("cgi-bin/state.cgi", {cmd: "lumawb", uid: ts}, function(data){
+    $.get("cgi-bin/state.cgi", {cmd: "lumawb", uid: ts}, function(data) {
         lumAwb = data.split("\n");
 
         $(".labelLum").each(function() {
@@ -67,7 +69,7 @@ function syncSwitches() {
         for (var i = 0; i < switchesStateArray.length; i++) {
             var switchState = switchesStateArray[i];
             var e = $('#' + switchState.id);
-            
+
             e.prop('checked', (switchState.status.trim().toLowerCase() == "on"));
         }
     });
@@ -89,13 +91,15 @@ function showResult(txt) {
 $(document).ready(function () {
 
     setTheme(getThemeChoice());
-    
+
     // Set title page and menu with hostname
-    $.get("cgi-bin/state.cgi", {cmd: "hostname"}, function(title){document.title = title;document.getElementById("title").title = title;});
-    
+    $.get("cgi-bin/state.cgi", { cmd: "hostname" }, function (title) {
+        document.title = title; document.getElementById("title").title = title;
+    });
+
     // Set initial fast camera controls.
     updateCameraControls();
-    
+
     // Load link into #content
     $('.onpage').click(function () {
         var e = $(this);
@@ -146,7 +150,7 @@ $(document).ready(function () {
         // refresh switches on burger is tapped
         syncSwitchesTimeout(500);
     });
-    
+
     // Autohide navbar for mobile
     $('#nav_menu').click(function () {
         // for mobile
@@ -176,7 +180,6 @@ $(document).ready(function () {
     // Make liveview self refresh
     $("#liveview").attr("onload", "scheduleRefreshLiveImage(1000);");
 
-    
     fixMenuPadding();
     refreshSysUsage();
 });
@@ -185,8 +188,7 @@ $(window).on('resize', function() {
     fixMenuPadding();
 });
 
-function fixMenuPadding()
-{
+function fixMenuPadding() {
     if ($(window).width() < 1023) {
         $("#nav_menu").css({ "padding-bottom": "6rem" });
     }
@@ -247,8 +249,7 @@ function getThemeChoice() {
     return c;
 }
 
-function cameraControlClick(control)
-{   
+function cameraControlClick(control) {
     var e = $(control);
     e.prop('disabled', true);
     $.get("cgi-bin/camcontrols.cgi", {
@@ -270,7 +271,6 @@ function cameraControlClick(control)
     });
 }
 
-
 function updateCameraControls() {
     $.get("cgi-bin/camcontrols.cgi?cmd=getcontrols").done(function(data) {
         $("#camcontrol_items").empty();
@@ -284,11 +284,10 @@ function updateCameraControls() {
                 data-unchecked=\"cgi-bin/camcontrols.cgi?cmd=off&control=" + camControl.id + "\"> \
                 <label for=\"" + camControl.id + "\">" + camControl.name + "</label></span>");
         }
-        
+
         syncSwitches();
     });
 }
-
 
 function pushToTalk(action) {
     if (action == "on") {

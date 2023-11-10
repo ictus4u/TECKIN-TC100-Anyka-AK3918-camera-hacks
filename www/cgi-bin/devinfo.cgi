@@ -1,9 +1,7 @@
 #!/bin/sh
 
-
 source ./func.cgi
 source /mnt/scripts/common_functions.sh
-
 
 echo "Content-type: text/html"
 echo "Pragma: no-cache"
@@ -35,7 +33,6 @@ cat << EOF
         <a target="_blank" href="cgi-bin/dumpbootloader.cgi">Download Bootloader</a>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -302,7 +302,7 @@ exports.default = Recorder;
 
 module.exports = require("./inline-worker");
 },{"./inline-worker":4}],4:[function(require,module,exports){
-(function (global){
+(function (global) {
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

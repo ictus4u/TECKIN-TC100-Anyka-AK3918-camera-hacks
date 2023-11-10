@@ -26,4 +26,3 @@ BODY="This is an alert from `hostname`"
 NUMBEROFPICTURES=4
 # Time in seconds between captures
 TIMEBETWEENSNAPSHOT=1
-

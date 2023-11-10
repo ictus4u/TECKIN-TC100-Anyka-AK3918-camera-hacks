@@ -63,9 +63,9 @@ function stopRecording() {
 
         //stop microphone access
         gumStream.getAudioTracks()[0].stop();
-        
+
     rec.exportWAV(sendAudio);
-    
+
     function sendAudio(blob) {
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
@@ -81,4 +81,3 @@ function stopRecording() {
     console.log("Audio sent");
     }, 2000);
 }
-

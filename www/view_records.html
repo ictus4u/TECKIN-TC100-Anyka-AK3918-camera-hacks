@@ -2,13 +2,13 @@
 
 @media screen and (min-width: 600px) {
     .vrc {
-      width: 30%;
-      position: relative;
-      float:left;
+        width: 30%;
+        position: relative;
+        float: left;
     }
 
     .vpl {
-      margin-left: 35%;
+        margin-left: 35%;
     }
 }
 
@@ -20,7 +20,7 @@
 
 @media screen and (min-width: 1024px) {
     #dwbtn,
-    #rmbtn{
+    #rmbtn {
         width: 75%
     }
 }
@@ -28,10 +28,9 @@
 #dateselectdiv,
 #recordselectdiv,
 #dateselect,
-#recordselect    {
-        width: 100%;
-        margin-bottom: 1em;
-    }
+#recordselect {
+    width: 100%;
+    margin-bottom: 1em;
 }
 </style>
 
@@ -40,12 +39,12 @@
 <header class='card-header'><p class='card-header-title'>Select video</p></header>
     <div class='card-content'>
         <div id="dateselectdiv" class="select is-loading">
-          <select id="dateselect" onchange="onDateChanged()">
-          </select>
+            <select id="dateselect" onchange="onDateChanged()">
+            </select>
         </div>
         <div id="recordselectdiv" class="select is-loading">
-          <select id="recordselect" onchange="onRecordChanged()">
-          </select>
+            <select id="recordselect" onchange="onRecordChanged()">
+            </select>
         </div>
         <input class='switch' id='autoplay' type='checkbox' onclick="autoPlayCheck(this)">
         <label for='autoplay'>Autoplay</label>
@@ -60,46 +59,42 @@
     <video id="rpl" controls width="100%"/>
 </div>
 
-
 <script type="text/javascript">
 
 function getBrowserName() {
-  var browserName = '';
-  var userAgent = navigator.userAgent;
-  (typeof InstallTrigger !== 'undefined') && (browserName = 'Firefox');
-  ( /* @cc_on!@*/ false || !!document.documentMode) && (browserName = 'IE');
-  (!!window.chrome && userAgent.match(/OPR/)) && (browserName = 'Opera');
-  (!!window.chrome && userAgent.match(/Edge/)) && (browserName = 'Edge');
-  (!!window.chrome && !userAgent.match(/(OPR|Edge)/)) && (browserName = 'Chrome');
+    var browserName = '';
+    var userAgent = navigator.userAgent;
+    (typeof InstallTrigger !== 'undefined') && (browserName = 'Firefox');
+    ( /* @cc_on!@*/ false || !!document.documentMode) && (browserName = 'IE');
+    (!!window.chrome && userAgent.match(/OPR/)) && (browserName = 'Opera');
+    (!!window.chrome && userAgent.match(/Edge/)) && (browserName = 'Edge');
+    (!!window.chrome && !userAgent.match(/(OPR|Edge)/)) && (browserName = 'Chrome');
 
-  /**
-   * Expected returns
-   * Firefox, Opera, Edge, Chrome
-   */
-  return browserName;
+    /**
+     * Expected returns
+     * Firefox, Opera, Edge, Chrome
+     */
+    return browserName;
 }
 
 if (getBrowserName() != 'Chrome') {
-   document.getElementById('videonote').innerHTML = 'Video playback supported only in Chrome.';
+    document.getElementById('videonote').innerHTML = 'Video playback supported only in Chrome.';
 }
 
 var recordsMap = new  Map();
 var autoPlayEnabled = false;
 
-function autoPlayCheck(checkbox)
-{
+function autoPlayCheck(checkbox) {
     if (checkbox.checked) {
         $('#rpl').attr("autoplay", true);
         autoPlayEnabled = true;
-    }
-    else {
+    } else {
         $('#rpl').removeAttr("autoplay");
         autoPlayEnabled = false;
     }
 }
 
-function downloadRecord()
-{
+function downloadRecord() {
     var selectedRecord = $('#recordselect').children("option:selected").val();
     if (selectedRecord) {
         var selectedDate = $('#dateselect').children("option:selected").val();
@@ -110,8 +105,7 @@ function downloadRecord()
     }
 }
 
-function removeRecord()
-{
+function removeRecord() {
     var selectedRecord = $('#recordselect').children("option:selected").val();
     if (selectedRecord) {
         var selectedDate = $('#dateselect').children("option:selected").val();
@@ -131,8 +125,7 @@ function removeRecord()
                         recordsMap.delete(selectedDate);
                         $('#dateselect option:contains("' + selectedDate + '")').remove();
                         onDateChanged();
-                    }
-                    else {
+                    } else {
                         $('#recordselect option:contains("' + selectedRecord + '")').remove();
                         onRecordChanged();
                     }
@@ -144,8 +137,7 @@ function removeRecord()
     }
 }
 
-function onRecordChanged()
-{
+function onRecordChanged() {
     var selectedRecord = $('#recordselect').children("option:selected").val();
     if (selectedRecord) {
         var selectedDate = $('#dateselect').children("option:selected").val();
@@ -158,8 +150,7 @@ function onRecordChanged()
     }
 }
 
-function setDateRecords(records)
-{
+function setDateRecords(records) {
     if (records) {
         for(let rec of records) {
             $('#recordselect').append("<option>" + rec + "</option>");
@@ -171,8 +162,7 @@ function setDateRecords(records)
     onRecordChanged();
 }
 
-function onDateChanged()
-{
+function onDateChanged() {
     var selectedDate = $('#dateselect').children("option:selected").val();
     if (selectedDate) {
         $('#recordselectdiv').addClass("is-loading");
@@ -185,8 +175,7 @@ function onDateChanged()
 
         if (records && records.size > 0) {
             setDateRecords(records);
-        }
-        else {
+        } else {
             $.get("cgi-bin/viewrecords.cgi", {
             cmd: "list_records",
             date: selectedDate
@@ -205,34 +194,30 @@ function onDateChanged()
     }
 }
 
+$(document).ready(function () {
 
-$(document).ready(function ()
-{
+    $('#rpl').on('ended', function() {
+        if (autoPlayEnabled) {
+            var curRec = $('#recordselect option:selected');
 
-$('#rpl').on('ended', function()
-{
-    if (autoPlayEnabled) {
-        var curRec = $('#recordselect option:selected');
-
-        if ($('#recordselect option').last().val() != curRec.val())
-        {
-            var nextRec = curRec.next();
-            curRec.removeAttr('selected');
-            nextRec.attr('selected', 'selected');
-            onRecordChanged();
+            if ($('#recordselect option').last().val() != curRec.val()) {
+                var nextRec = curRec.next();
+                curRec.removeAttr('selected');
+                nextRec.attr('selected', 'selected');
+                onRecordChanged();
+            }
         }
-    }
-});
+    });
 
-$.get("cgi-bin/viewrecords.cgi", {
+    $.get("cgi-bin/viewrecords.cgi", {
         cmd: "list_dates"
     }).done(function (data) {
 
         //debugger;
         var allDates = eval(data);
 
-         $('#dateselectdiv').removeClass("is-loading");
-         $('#recordselectdiv').removeClass("is-loading");
+        $('#dateselectdiv').removeClass("is-loading");
+        $('#recordselectdiv').removeClass("is-loading");
 
         for (var i = 0; i < allDates.length; i++) {
             var date = allDates[i].date;
@@ -246,9 +231,7 @@ $.get("cgi-bin/viewrecords.cgi", {
             $('#dateselect option:selected').removeAttr('selected');
             $('#dateselect option').last().attr('selected', 'selected');
             onDateChanged();
-        }
-        else
-        {
+        } else {
             $("#rpl").replaceWith("<div class='notification is-info'>No video records found.<br>Enable <strong>'Recording'</strong> service in  settings to store video on MicroSD-card.</div>");
             $('#dateselect').attr("disabled", true);
             $('#recordselect').attr("disabled", true);
@@ -257,4 +240,3 @@ $.get("cgi-bin/viewrecords.cgi", {
     });
 })
 </script>
-

@@ -5,8 +5,8 @@
 
 # Run any user scripts.
 for i in /mnt/config/userscripts/motiondetection/*; do
-    if [ -x $i ]; then
-        echo "Running: $i off"
-        $i off
-    fi
+	if [ -x ${i} ]; then
+		echo "Running: ${i} off"
+		${i} off
+	fi
 done
